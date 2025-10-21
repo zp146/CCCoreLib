@@ -1,0 +1,19 @@
+{
+	"dependencies": [
+		"qt5-base",
+		"cgal",
+		"gmp",
+		"tbb"
+	],
+	"builtin-baseline": "bcf3d00d2116056fda0ce47615f6074ffecb7524",
+	"overrides": [
+		{
+			"name": "qt5-base",
+			"version": "5.15.14"
+		},
+		{
+			"name": "gmp",
+			"version": "6.3.0#2"
+		}
+	]
+}

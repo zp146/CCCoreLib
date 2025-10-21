@@ -11,11 +11,14 @@ project( CCCoreLib
 	VERSION
 		1.0
 )
-
+list (APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+message("toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+include(${CMAKE_TOOLCHAIN_FILE})
 # Options
 option( CCCORELIB_USE_CGAL
 	"Compile CCCoreLib with CGAL (to enable Delaunay 2.5D triangulation with a GPL-compliant licence)"
-	OFF
+	ON
 )
 option( CCCORELIB_USE_TBB
 	"Compile CCCoreLib with Intel Threading Building Blocks lib (enables some parallel processing )"
@@ -163,17 +166,17 @@ if ( CCCORELIB_USE_TBB )
 	if ( TBB_FOUND )
 		if ( ${TBB_VERSION} VERSION_GREATER 2021.0.0 )
 			target_link_libraries( CCCoreLib
-				PUBLIC
-					TBB::tbb
+				PRIVATE
+				TBB::tbb
 			)
 		else()
 			target_link_libraries( CCCoreLib
-				PUBLIC
-					${TBB_IMPORTED_TARGETS}
+				PRIVATE
+				${TBB_IMPORTED_TARGETS}
 			)
 		endif()
 		target_compile_definitions( CCCoreLib
-			PUBLIC
+			PRIVATE
 				CC_CORE_LIB_USES_TBB
 				TBB_VERSION="${TBB_VERSION}"
 		)
@@ -182,7 +185,7 @@ endif()
 
 # CGAL (optional)
 if ( CCCORELIB_USE_CGAL )
-	find_package( CGAL 5.1 REQUIRED )
+	find_package(CGAL CONFIG REQUIRED)
 
 	if( WIN32 )
 		# Need to force the visibility of these variables so that we can use them later
@@ -206,12 +209,12 @@ if ( CCCORELIB_USE_CGAL )
 	endif()
 
 	target_link_libraries( CCCoreLib
-		PUBLIC
+		PRIVATE
 			CGAL::CGAL
 	)
 
 	target_compile_definitions( CCCoreLib
-		PUBLIC
+		PRIVATE
 			CC_CORE_LIB_USES_CGAL_LIB
 	)
 endif()
@@ -231,12 +234,12 @@ if ( CCCORELIB_USE_QT_CONCURRENT )
 	)
 
 	target_link_libraries( CCCoreLib
-		PUBLIC
-			Qt5::Concurrent
+		PRIVATE
+            Qt5::Concurrent
 	)
 
 	target_compile_definitions( CCCoreLib
-		PUBLIC
+		PRIVATE
 			CC_CORE_LIB_USES_QT_CONCURRENT
 	)
 endif()
