@@ -119,14 +119,24 @@ target_compile_definitions( CCCoreLib
 )
 
 # Nanoflann
-option(NANOFLANN_BUILD_BENCHMARKS "" OFF)
-option(NANOFLANN_BUILD_EXAMPLES "" OFF)
-option(NANOFLANN_BUILD_TESTS "" OFF)
-add_subdirectory( extern/nanoflann EXCLUDE_FROM_ALL )
-target_link_libraries( CCCoreLib
-	PUBLIC
-		nanoflann::nanoflann
-)
+# 优先使用 vcpkg 提供的 nanoflann，找不到时回退到内置 extern/nanoflann
+find_package(nanoflann CONFIG)
+
+if (nanoflann_FOUND)
+    target_link_libraries( CCCoreLib
+        PUBLIC
+            nanoflann::nanoflann
+    )
+else()
+    option(NANOFLANN_BUILD_BENCHMARKS "" OFF)
+    option(NANOFLANN_BUILD_EXAMPLES "" OFF)
+    option(NANOFLANN_BUILD_TESTS "" OFF)
+    add_subdirectory( extern/nanoflann EXCLUDE_FROM_ALL )
+    target_link_libraries( CCCoreLib
+        PUBLIC
+            nanoflann::nanoflann
+    )
+endif()
 
 # Windows-specific flags
 if ( WIN32 )
