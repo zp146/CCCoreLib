@@ -189,8 +189,8 @@ if ( CCCORELIB_USE_CGAL )
 
 	if( WIN32 )
 		# Need to force the visibility of these variables so that we can use them later
-		set (GMP_LIBRARIES ${GMP_LIBRARIES} PARENT_SCOPE) 
-		set (MPFR_LIBRARIES ${MPFR_LIBRARIES} PARENT_SCOPE) 
+		# set (GMP_LIBRARIES ${GMP_LIBRARIES} PARENT_SCOPE) 
+		# set (MPFR_LIBRARIES ${MPFR_LIBRARIES} PARENT_SCOPE) 
 	endif()
 
 	if ( CCCORELIB_USE_TBB )
@@ -270,15 +270,17 @@ install(
 # CMake Package Files
 include( CMakePackageConfigHelpers )
 
+set(PACKAGE_LIBRARIES CCCoreLib::CCCoreLib)
+
 configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/${PROJECT_NAME}Config.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-  INSTALL_DESTINATION lib/cmake/${PROJECT_NAME}
+  INSTALL_DESTINATION share/${PROJECT_NAME}
   NO_CHECK_REQUIRED_COMPONENTS_MACRO
 )
 
 write_basic_package_version_file( CCCoreLibConfigVersion.cmake
 	VERSION
-		${PACKAGE_VERSION}
+		${PROJECT_VERSION}
 	COMPATIBILITY
 		AnyNewerVersion
 )
@@ -288,7 +290,18 @@ install(
 		"${CMAKE_CURRENT_BINARY_DIR}/CCCoreLibConfigVersion.cmake"
 		"${CMAKE_CURRENT_BINARY_DIR}/CCCoreLibConfig.cmake"
 	DESTINATION
-		lib/cmake/CCCoreLib
+		share/CCCoreLib
+)
+
+install(
+	EXPORT
+		CCCoreLib-targets
+	FILE
+		CCCoreLibTargets.cmake
+	NAMESPACE
+		CCCoreLib::
+	DESTINATION
+		share/CCCoreLib
 )
 
 # Export
