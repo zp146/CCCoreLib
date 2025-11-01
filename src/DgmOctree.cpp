@@ -20,7 +20,7 @@
 //#define ADAPTATIVE_BINARY_SEARCH
 
 //Qt
-#include <QCoreApplication>
+//#include <QCoreApplication>
 //#ifndef CC_DEBUG
 //enables multi-threading handling (Release only)
 //requires TBB or QtConcurrent

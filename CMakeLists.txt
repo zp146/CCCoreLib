@@ -26,7 +26,7 @@ option( CCCORELIB_USE_TBB
 )
 option( CCCORELIB_USE_QT_CONCURRENT
 	"Compile CCCoreLib with QtConcurrent (to enable parallel processing)"
-	ON
+	OFF
 )
 option( CCCORELIB_SHARED
 	"Compile CCCoreLib as a shared library"
