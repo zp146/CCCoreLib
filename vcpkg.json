@@ -5,11 +5,13 @@
   "homepage": "https://github.com/zp146/CCCoreLib",
   "dependencies": [
     { "name": "nanoflann" },
-    { "name": "cgal" }
+    { "name": "cgal" },
+    { "name": "gmp" }
   ],
   "builtin-baseline": "bcf3d00d2116056fda0ce47615f6074ffecb7524",
   "overrides": [
     { "name": "gmp", "version": "6.3.0#2" },
+    { "name": "cgal", "version": "5.6.1" },
     { "name": "nanoflann", "version": "1.5.5" }
   ]
 }

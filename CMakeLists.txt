@@ -300,7 +300,7 @@ install(
 		"${CMAKE_CURRENT_BINARY_DIR}/CCCoreLibConfigVersion.cmake"
 		"${CMAKE_CURRENT_BINARY_DIR}/CCCoreLibConfig.cmake"
 	DESTINATION
-		share/CCCoreLib
+		${CMAKE_INSTALL_LIBDIR}/cmake
 )
 
 install(
@@ -311,7 +311,7 @@ install(
 	NAMESPACE
 		CCCoreLib::
 	DESTINATION
-		share/CCCoreLib
+		"lib/cmake/CCCoreLib"
 )
 
 # Export
