@@ -1,12 +1,14 @@
 @PACKAGE_INIT@
 
 set(@PROJECT_NAME@_FOUND ON)
-set_and_check(@PROJECT_NAME@_INCLUDE_DIRS "${PACKAGE_PREFIX_DIR}/include")
-set_and_check(@PROJECT_NAME@_LIBRARY_DIRS "${PACKAGE_PREFIX_DIR}/lib")
 set(@PROJECT_NAME@_LIBRARIES "@PACKAGE_LIBRARIES@")
 
 include(CMakeFindDependencyMacro)
-find_dependency(nanoflann CONFIG)
+if( ${CMAKE_VERSION} VERSION_LESS "3.10.0" )
+  find_dependency(nanoflann CONFIG)
+ else()
+  find_package(nanoflann CONFIG REQUIRED)
+ endif() 
 
 if( @CCCORELIB_USE_CGAL@ )
   find_dependency( CGAL )
@@ -26,4 +28,3 @@ if( @CCCORELIB_USE_QT_CONCURRENT@ )
   endif()
 endif()
 
-include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")

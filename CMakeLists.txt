@@ -256,25 +256,11 @@ endif()
 
 # Install
 # See: https://cliutils.gitlab.io/modern-cmake/chapters/install/installing.html
-install(
-	TARGETS
-		CCCoreLib
-	EXPORT
-		CCCoreLib-targets
+install(TARGETS ${PROJECT_NAME}
+	EXPORT ${PROJECT_NAME}Config
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 	INCLUDES DESTINATION include
-)
-
-install(
-	EXPORT
-		CCCoreLib-targets
-	FILE
-		CCCoreLibTargets.cmake
-	NAMESPACE
-		CCCoreLib::
-	DESTINATION
-		lib/cmake/CCCoreLib
 )
 
 # CMake Package Files
@@ -288,38 +274,9 @@ configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/${PROJECT_NAME}Con
   NO_CHECK_REQUIRED_COMPONENTS_MACRO
 )
 
-write_basic_package_version_file( CCCoreLibConfigVersion.cmake
-	VERSION
-		${PROJECT_VERSION}
-	COMPATIBILITY
-		AnyNewerVersion
-)
-
 install(
 	FILES
-		"${CMAKE_CURRENT_BINARY_DIR}/CCCoreLibConfigVersion.cmake"
-		"${CMAKE_CURRENT_BINARY_DIR}/CCCoreLibConfig.cmake"
+		"${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
 	DESTINATION
-		"lib/cmake/CCCoreLib"
-)
-
-install(
-	EXPORT
-		CCCoreLib-targets
-	FILE
-		CCCoreLibTargets.cmake
-	NAMESPACE
-		CCCoreLib::
-	DESTINATION
-		"lib/cmake/CCCoreLib"
-)
-
-# Export
-export(
-	TARGETS
-		CCCoreLib
-	NAMESPACE
-		CCCoreLib::
-	FILE
-		CCCoreLibTargets.cmake
+		${CMAKE_INSTALL_LIBDIR}/cmake
 )
