@@ -300,7 +300,7 @@ install(
 		"${CMAKE_CURRENT_BINARY_DIR}/CCCoreLibConfigVersion.cmake"
 		"${CMAKE_CURRENT_BINARY_DIR}/CCCoreLibConfig.cmake"
 	DESTINATION
-		${CMAKE_INSTALL_LIBDIR}/cmake
+		"lib/cmake/CCCoreLib"
 )
 
 install(
