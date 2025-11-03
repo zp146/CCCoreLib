@@ -258,6 +258,7 @@ endif()
 # See: https://cliutils.gitlab.io/modern-cmake/chapters/install/installing.html
 install(TARGETS ${PROJECT_NAME}
 	EXPORT ${PROJECT_NAME}Config
+	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 	INCLUDES DESTINATION include
@@ -265,12 +266,13 @@ install(TARGETS ${PROJECT_NAME}
 
 # CMake Package Files
 include( CMakePackageConfigHelpers )
+include( GNUInstallDirs )
 
 set(PACKAGE_LIBRARIES CCCoreLib::CCCoreLib)
 
 configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/${PROJECT_NAME}Config.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-  INSTALL_DESTINATION share/${PROJECT_NAME}
+  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
   NO_CHECK_REQUIRED_COMPONENTS_MACRO
 )
 
